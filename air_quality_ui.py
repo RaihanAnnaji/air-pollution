@@ -8,24 +8,13 @@ encoder = joblib.load('label_encoder.pkl')
 
 st.set_page_config(page_title="Prediksi Kualitas Udara", layout="wide")
 
-# CSS untuk background dan container utama
+# CSS: hanya background saja, tanpa card
 st.markdown("""
     <style>
         .stApp {
             background-image: linear-gradient(to bottom right, #e0f7fa, #ffffff);
             background-attachment: fixed;
-            padding: 0 !important;
         }
-
-        .main-box {
-            background-color: rgba(255, 255, 255, 0.9);
-            padding: 3rem 2rem;
-            border-radius: 20px;
-            box-shadow: 0px 8px 30px rgba(0,0,0,0.1);
-            max-width: 90%;
-            margin: 2rem auto;
-        }
-
         h1, h3 {
             text-align: center;
             color: #00695c;
@@ -33,21 +22,19 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# Header
+# Title
 st.markdown("<h1>🌍 Prediksi Kualitas Udara</h1>", unsafe_allow_html=True)
 st.markdown("<p style='text-align: center;'>Masukkan parameter lingkungan dan lihat prediksi kualitas udara secara langsung.</p>", unsafe_allow_html=True)
 
-# Semua konten dalam satu box putih transparan
+# Container utama
 with st.container():
-    st.markdown('<div class="main-box">', unsafe_allow_html=True)
-
     col1, col2 = st.columns([2, 1])
     
     # Kiri: Input
     with col1:
         st.markdown("### 🔧 Input Parameter")
+        
         col_a, col_b, col_c = st.columns(3)
-
         with col_a:
             temperature = st.number_input("🌡️ Suhu (°C)", 0.0, 50.0, 25.0)
             pm25 = st.number_input("💨 PM2.5", 0.0, 500.0, 10.0)
@@ -80,5 +67,3 @@ with st.container():
                 st.info("ℹ️ Tidak diketahui – Perlu observasi lebih lanjut.")
         else:
             st.info("Masukkan data dan klik prediksi.")
-
-    st.markdown('</div>', unsafe_allow_html=True)
