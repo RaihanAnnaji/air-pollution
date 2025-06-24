@@ -8,22 +8,22 @@ encoder = joblib.load('label_encoder.pkl')
 
 st.set_page_config(page_title="Prediksi Kualitas Udara", layout="wide")
 
-# Custom CSS (fix background + text color + card style)
+# Custom CSS untuk background & card style
 st.markdown("""
     <style>
         .stApp {
             background-image: linear-gradient(to bottom right, #e0f7fa, #ffffff);
             background-attachment: fixed;
-            color: black !important;
         }
-        .card-style {
+        .card {
             background-color: white;
             padding: 2rem;
             border-radius: 15px;
             box-shadow: 0px 4px 20px rgba(0,0,0,0.1);
         }
-        h1, h3, p, label, .stTextInput > label, .stNumberInput > label {
-            color: #004d40 !important;
+        h1, h3 {
+            text-align: center;
+            color: #00695c;
         }
     </style>
 """, unsafe_allow_html=True)
@@ -32,16 +32,15 @@ st.markdown("""
 st.markdown("<h1>🌍 Prediksi Kualitas Udara</h1>", unsafe_allow_html=True)
 st.markdown("<p style='text-align: center;'>Masukkan parameter lingkungan dan lihat prediksi kualitas udara secara langsung.</p>", unsafe_allow_html=True)
 
-# Container 1 Halaman, dua kolom: input kiri, output kanan
-container = st.container()
-col1, col2 = container.columns([2, 1])
-
-# Kiri - Input (dibungkus dalam card-style)
-with col1:
-    with st.container():
-        st.markdown("<div class='card-style'>", unsafe_allow_html=True)
+# UI dalam satu card container
+with st.container():
+    col1, col2 = st.columns([2, 1])
+    
+    # Kiri: Input
+    with col1:
+        st.markdown("<div class='card'>", unsafe_allow_html=True)
         st.markdown("### 🔧 Input Parameter")
-
+        
         col_a, col_b, col_c = st.columns(3)
         with col_a:
             temperature = st.number_input("🌡️ Suhu (°C)", 0.0, 50.0, 25.0)
@@ -55,12 +54,12 @@ with col1:
             no2 = st.number_input("🧪 NO2", 0.0, 200.0, 15.0)
             so2 = st.number_input("🧪 SO2", 0.0, 200.0, 10.0)
             pop_density = st.number_input("👥 Kepadatan Penduduk", 0.0, 1000.0, 300.0)
+
         st.markdown("</div>", unsafe_allow_html=True)
 
-# Kanan - Output Prediksi
-with col2:
-    with st.container():
-        st.markdown("<div class='card-style'>", unsafe_allow_html=True)
+    # Kanan: Output Prediksi
+    with col2:
+        st.markdown("<div class='card'>", unsafe_allow_html=True)
         st.markdown("### 📊 Hasil Prediksi")
 
         if st.button("🔍 Prediksi Sekarang"):
@@ -78,4 +77,5 @@ with col2:
                 st.info("ℹ️ Tidak diketahui – Perlu observasi lebih lanjut.")
         else:
             st.info("Masukkan data dan klik prediksi.")
+        
         st.markdown("</div>", unsafe_allow_html=True)
